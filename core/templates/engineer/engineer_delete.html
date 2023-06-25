@@ -1,0 +1,9 @@
+{% extends 'global/base.html' %}
+{% block content %}
+<h1>Confirma exclusão de engenheiro</h1>
+<form method="post">
+    {% csrf_token %}
+    <h2>Voce quer remover {{ engineer.name }} ?</h2>
+    <button type="submit">Confirm</button>
+</form>
+{% endblock content %}
