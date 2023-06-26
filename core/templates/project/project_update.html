@@ -1,0 +1,116 @@
+{% extends 'global/base.html' %}
+{% block script %}
+    <script>
+        function addMaterial(materialId, materialName, materialPrice) {
+            var materialFields = document.getElementById('material-fields');
+
+            var div = document.createElement('div');
+            div.className = 'material-field';
+
+            var materialInput = document.createElement('input');
+            materialInput.type = 'text';
+            materialInput.name = 'materials';
+            materialInput.value = materialId;
+            materialInput.readOnly = true;
+
+            var nameLabel = document.createElement('label');
+            nameLabel.textContent = 'Name: ' + materialName;
+
+            var priceLabel = document.createElement('label');
+            priceLabel.textContent = 'Price: $' + materialPrice;
+
+            var quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.name = 'quantities';
+            quantityInput.value = 1;
+            quantityInput.required = true;
+            quantityInput.addEventListener('input', calculateSubtotal);
+
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', function() {
+                removeMaterialField(div);
+                calculateSubtotal();
+            });
+
+            div.appendChild(materialInput);
+            div.appendChild(nameLabel);
+            div.appendChild(priceLabel);
+            div.appendChild(quantityInput);
+            div.appendChild(removeButton);
+
+            materialFields.appendChild(div);
+
+            calculateSubtotal();
+        }
+
+        function removeMaterialField(field) {
+            field.parentNode.removeChild(field);
+        }
+
+        function calculateSubtotal() {
+            var materialFields = document.getElementsByClassName('material-field');
+            var subtotal = 0;
+
+            for (var i = 0; i < materialFields.length; i++) {
+                var priceLabel = materialFields[i].querySelector('label:nth-child(3)');
+                var quantityInput = materialFields[i].querySelector('input[type="number"]');
+                var price = parseFloat(priceLabel.textContent.split('$')[1]);
+                var quantity = parseInt(quantityInput.value);
+
+                subtotal += price * quantity;
+            }
+
+            var subtotalInput = document.getElementById('subtotal');
+            subtotalInput.value = subtotal.toFixed(2);
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">  
+        <h1>Update Project</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="project_name">Project Name:</label>
+            <input type="text" id="project_name" name="project_name" value="{{ project.name }}" required><br>
+
+            <label for="engineer_id">Engineer Responsible:</label>
+            <select id="engineer_id" name="engineer_id" required>
+                {% for engineer in engineers %}
+                    <option value="{{ engineer.id }}" {% if engineer.id == project.engineer_responsible_id %}selected{% endif %}>{{ engineer.name }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="area">Area:</label>
+            <input type="text" id="area" name="area" value="{{ project.area }}" required><br>
+
+            <h2>Materials</h2>
+            {% for material in materials %}
+                <button type="button" onclick="addMaterial('{{ material.id }}', '{{ material.name }}', '{{ material.price }}')">Add {{ material.name }}</button>
+            {% endfor %}
+
+            <div id="material-fields">
+                <!-- Selected materials will be added here -->
+                {% for project_material in project.projectmaterial_set.all %}
+                    <div class="material-field">
+                        <input type="text" name="materials" value="{{ project_material.material.id }}" readonly>
+
+                        <label>Name: {{ project_material.material.name }}</label>
+                        <label>Price: ${{ project_material.material.price }}</label>
+
+                        <input type="number" name="quantities" value="{{ project_material.quantity }}" required oninput="calculateSubtotal()">
+                        <button type="button" onclick="removeMaterialField(this)">Remove</button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <label for="subtotal">Subtotal:</label>
+            <input type="text" id="subtotal" name="subtotal" value="{{ project.subtotal }}" readonly>
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+
+{% extends 'global/base.html' %}
+
+{% block script %}
+    <script>
+        function addMaterial(materialId, materialName, materialPrice) {
+            var materialFields = document.getElementById('material-fields');
+
+            var div = document.createElement('div');
+            div.className = 'material-field';
+
+            var materialInput = document.createElement('input');
+            materialInput.type = 'text';
+            materialInput.name = 'materials';
+            materialInput.value = materialId;
+            materialInput.readOnly = true;
+
+            var nameLabel = document.createElement('label');
+            nameLabel.textContent = 'Name: ' + materialName;
+
+            var priceLabel = document.createElement('label');
+            priceLabel.textContent = 'Price: $' + materialPrice;
+
+            var quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.name = 'quantities';
+            quantityInput.value = 1;
+            quantityInput.addEventListener('input', calculateSubtotal);
+
+            div.appendChild(materialInput);
+            div.appendChild(nameLabel);
+            div.appendChild(priceLabel);
+            div.appendChild(quantityInput);
+
+            materialFields.appendChild(div);
+
+            calculateSubtotal();
+        }
+
+        function calculateSubtotal() {
+            var materialFields = document.getElementsByClassName('material-field');
+            var subtotal = 0;
+
+            for (var i = 0; i < materialFields.length; i++) {
+                var priceLabel = materialFields[i].querySelector('label:nth-child(3)');
+                var quantityInput = materialFields[i].querySelector('input[type="number"]');
+                var price = parseFloat(priceLabel.textContent.split('$')[1]);
+                var quantity = parseInt(quantityInput.value);
+
+                subtotal += price * quantity;
+                
+            }
+
+            var subtotalInput = document.getElementById('subtotal');
+            subtotalInput.value = subtotal.toFixed(2);
+        }
+    </script>
+{% endblock %} 
+
+{% block content %}
+    <div class="container">  
+        <h1>Create Project</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="project_name">Project Name:</label>
+            <input type="text" id="project_name" name="project_name" required><br>
+
+            <label for="engineer_id">Engineer Responsible:</label>
+            <select id="engineer_id" name="engineer_id" required>
+                {% for engineer in engineers %}
+                    <option value="{{ engineer.id }}">{{ engineer.name }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="area">Area:</label>
+            <input type="text" id="area" name="area" required><br>
+
+            <h2>Materials</h2>
+            {% for material in materials %}
+                <button type="button" onclick="addMaterial('{{ material.id }}', '{{ material.name }}', '{{ material.price }}')">Add {{ material.name }}</button>
+            {% endfor %}
+
+            <div id="material-fields">
+                <!-- Selected materials will be added here -->
+            </div>
+
+            <label for="subtotal">Subtotal:</label>
+            <input type="text" id="subtotal" name="subtotal" readonly>
+
+            <button type="submit">Create</button>
+        </form>
+    </div>
+{% endblock %} 

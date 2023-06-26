@@ -1,9 +1,12 @@
 {% extends 'global/base.html' %}
-{% block content %}    
-    <h1>Cadastro de material</h1>
-    <form action='' method='post'>
-        {% csrf_token %}
-        {{ form }}
-        <button name='data' type='submit'>Salvar</button>
-    </form>
+
+{% block content %}
+    <div class="container">    
+        <h1>Cadastro de material</h1>
+        <form action='' method='post'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button name='data' type='submit'>Salvar</button>
+        </form>
+    </div>
 {% endblock content %}

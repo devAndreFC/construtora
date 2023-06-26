@@ -1,10 +1,11 @@
 {% extends 'global/base.html' %}
+
 {% block content %}
-    <div class="container">
-        <h1>Confirma exclusão de engenheiro</h1>
+    <div class="container">   
+        <h1>Confirma exclusão do projeto</h1>
         <form method="post">
             {% csrf_token %}
-            <h2>Voce quer remover {{ engineer.name }} ?</h2>
+            <h2>Voce quer remover {{ project.name }} ?</h2>
             <button type="submit">Confirm</button>
         </form>
     </div>

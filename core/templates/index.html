@@ -1,34 +1,37 @@
 {% extends 'global/base.html' %}
+
 {% block content %}
-    <h1>Index</h1>
-    <div class="card">
-        <div class="card-header">
-            Nossos Engenheiros
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Formados nas melhores universidades do Brasil</h5>
-            <p class="card-text">Possuem CREA.</p>
-            <a href="{% url 'engineers' %}" class="btn btn-primary">Veja</a>
-        </div>
-    </div>    
-    <div class="card">
-        <div class="card-header">
-            Nossos Materiais
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Os materiais da mais alta qualidade</h5>
-            <p class="card-text">Produzidos no Brasil</p>
-            <a href="{% url 'materials' %}" class="btn btn-primary">Veja</a>
-        </div>
-    </div>    
-    <div class="card">
-        <div class="card-header">
-            Nossos Projetos
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Projetos realidos por nossos engenheiros</h5>
-            <p class="card-text">Com orçamento e materiais</p>
-            <a href="#" class="btn btn-primary">Veja</a>
+    <div class="container">   
+        <h1>Index</h1>
+        <div class="card">
+            <div class="card-header">
+                Nossos Engenheiros
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Formados nas melhores universidades do Brasil</h5>
+                <p class="card-text">Possuem CREA.</p>
+                <a href="{% url 'engineers' %}" class="btn btn-primary">Veja</a>
+            </div>
+        </div>    
+        <div class="card">
+            <div class="card-header">
+                Nossos Materiais
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Os materiais da mais alta qualidade</h5>
+                <p class="card-text">Produzidos no Brasil</p>
+                <a href="{% url 'materials' %}" class="btn btn-primary">Veja</a>
+            </div>
+        </div>    
+        <div class="card">
+            <div class="card-header">
+                Nossos Projetos
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Projetos realidos por nossos engenheiros</h5>
+                <p class="card-text">Com orçamento e materiais</p>
+                <a href="#" class="btn btn-primary">Veja</a>
+            </div>
         </div>
     </div>
 

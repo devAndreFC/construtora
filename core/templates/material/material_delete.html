@@ -1,9 +1,12 @@
 {% extends 'global/base.html' %}
+
 {% block content %}
-    <h1>Confirma exclusão do material</h1>
-    <form method="post">
-        {% csrf_token %}
-        <h2>Voce quer remover {{ material.name }} ?</h2>
-        <button type="submit">Confirm</button>
-    </form>
+    <div class="container">   
+        <h1>Confirma exclusão do material</h1>
+        <form method="post">
+            {% csrf_token %}
+            <h2>Voce quer remover {{ material.name }} ?</h2>
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
 {% endblock content %}

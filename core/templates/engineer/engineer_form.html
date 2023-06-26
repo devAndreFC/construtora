@@ -1,9 +1,18 @@
 {% extends 'global/base.html' %}
+
 {% block content %}
-    <h1>Cadastro de engenheiro</h1>
-    <form action='' method='post'>
-        {% csrf_token %}
-        {{ form }}
-        <button name='data' type='submit'>Salvar</button>
-    </form>
+    <div class="container">   
+        <h1>Cadastro de engenheiro</h1>
+        <hr>
+        <form action='' method='post'>
+            {% csrf_token %}
+
+            {% for field in form %}
+                {{ field.label_tag }}: <br>{{ field }}
+                <br>
+            {% endfor %}
+            <br>
+            <button class="btn-success" type='submit'>Salvar</button>
+        </form>
+    </div>
 {% endblock content %}
