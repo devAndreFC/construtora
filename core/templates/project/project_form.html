@@ -16,10 +16,10 @@
             materialInput.readOnly = true;
 
             var nameLabel = document.createElement('label');
-            nameLabel.textContent = 'Name: ' + materialName;
+            nameLabel.textContent = ' Nome: ' + materialName + ' - ';
 
             var priceLabel = document.createElement('label');
-            priceLabel.textContent = 'Price: $' + materialPrice;
+            priceLabel.textContent = 'Preço: $' + materialPrice + ' - ';
 
             var quantityInput = document.createElement('input');
             quantityInput.type = 'number';
@@ -58,36 +58,51 @@
 {% endblock %} 
 
 {% block content %}
-    <div class="container">  
-        <h1>Create Project</h1>
+    <div class="container">
+        <br>  
+        <h1>Cadastro de Projeto</h1>
+        <hr>
         <form method="post">
             {% csrf_token %}
-            <label for="project_name">Project Name:</label>
-            <input type="text" id="project_name" name="project_name" required><br>
+            <label for="project_name">Nome do Projeto: </label><br>
+            <input type="text" id="project_name" name="project_name" required><hr>
 
-            <label for="engineer_id">Engineer Responsible:</label>
+            <label for="engineer_id">Engenheiro Responsável:</label><br>
             <select id="engineer_id" name="engineer_id" required>
                 {% for engineer in engineers %}
                     <option value="{{ engineer.id }}">{{ engineer.name }}</option>
                 {% endfor %}
+                
             </select><br>
+            <hr>
+            <label for="bedrooms">Quantidade de quartos: </label><br>
+            <input type="text" id="bedrooms" name="bedrooms" required>
+            <hr>
+            <label for="bathrooms">Quantidade de Banheiros: </label><br>
+            <input type="text" id="bathrooms" name="bathrooms" required>
+            <hr>
+            <label for="floors">Quantidade de pisos: </label><br>
+            <input type="text" id="floors" name="floors" required>
+            <hr>
+            
+            <label for="area">Área:</label><br>
+            <input type="text" id="area" name="area" required><hr>
 
-            <label for="area">Area:</label>
-            <input type="text" id="area" name="area" required><br>
-
-            <h2>Materials</h2>
+            <h2>Materiais do Projeto</h2>
             {% for material in materials %}
-                <button type="button" onclick="addMaterial('{{ material.id }}', '{{ material.name }}', '{{ material.price }}')">Add {{ material.name }}</button>
+                <button class='btn btn-primary' type="button" onclick="addMaterial('{{ material.id }}', '{{ material.name }}', '{{ material.price }}')">Add {{ material.name }}</button>
             {% endfor %}
 
             <div id="material-fields">
+                <br>
                 <!-- Selected materials will be added here -->
             </div>
+            <hr>
 
-            <label for="subtotal">Subtotal:</label>
-            <input type="text" id="subtotal" name="subtotal" readonly>
+            <label for="subtotal">Subtotal:</label><br>
+            <input type="text" id="subtotal" name="subtotal" readonly><hr>
 
-            <button type="submit">Create</button>
+            <button class='btn btn-success' type="submit">Cadastrar</button>
         </form>
     </div>
 {% endblock %} 

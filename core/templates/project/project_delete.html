@@ -2,11 +2,12 @@
 
 {% block content %}
     <div class="container">   
-        <h1>Confirma exclusão do projeto</h1>
+        <br>
+        <h1>Confirma exclusão do projeto</h1><hr>
         <form method="post">
             {% csrf_token %}
-            <h2>Voce quer remover {{ project.name }} ?</h2>
-            <button type="submit">Confirm</button>
+            <h2>Voce quer remover {{ project.name }} ?</h2><br>
+            <button class="btn btn-warning" type="submit">Confirm</button>
         </form>
     </div>
 {% endblock content %}

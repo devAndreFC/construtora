@@ -2,7 +2,7 @@ from .models import Engineeer
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .models import Engineeer, Material, Project
-from .forms import EngineerForm, MateralForm, ProjectForm
+from .forms import EngineerForm, MateralForm
 
 
 def index(request):
@@ -95,10 +95,14 @@ def project_create(request):
         project_name = request.POST.get('project_name')
         engineer_id = request.POST.get('engineer_id')
         area = request.POST.get('area')
+        bedrooms = request.POST.get('bedrooms')
+        bathrooms = request.POST.get('bathrooms')
+        floors = request.POST.get('floors')
         materials_selected = request.POST.getlist('materials')
         quantities = request.POST.getlist('quantities')
 
-        project = Project.objects.create(name=project_name, engineer_responsible_id=engineer_id, area=area)
+        project = Project.objects.create(name=project_name, engineer_responsible_id=engineer_id, area=area, 
+                                         bedrooms=bedrooms, bathrooms=bathrooms, floors=floors)
         
         subtotal = 0
         for material_id, quantity in zip(materials_selected, quantities):
@@ -125,12 +129,19 @@ def project_update(request, project_id):
         project_name = request.POST.get('project_name')
         engineer_id = request.POST.get('engineer_id')
         area = request.POST.get('area')
+        bedrooms = request.POST.get('bedrooms')
+        bathrooms = request.POST.get('bathrooms')
+        floors = request.POST.get('floors')
         materials_selected = request.POST.getlist('materials')
         quantities = request.POST.getlist('quantities')
 
         project.name = project_name
         project.engineer_responsible_id = engineer_id
         project.area = area
+        project.bedrooms = bedrooms
+        project.bathrooms = bathrooms
+        project.floors = floors
+        
         project.materials.clear()  # Remove todos os materiais associados ao projeto
 
         subtotal = 0

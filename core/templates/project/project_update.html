@@ -70,46 +70,65 @@
 
 {% block content %}
     <div class="container">  
-        <h1>Update Project</h1>
+        <br>
+        <h1>Atualizar Projeto</h1>
+        <hr>
         <form method="post">
             {% csrf_token %}
-            <label for="project_name">Project Name:</label>
+            <label for="project_name">Nome do Projeto:</label>
+            <br>
             <input type="text" id="project_name" name="project_name" value="{{ project.name }}" required><br>
-
-            <label for="engineer_id">Engineer Responsible:</label>
+            <hr>
+            <label for="engineer_id">Engenheiro Responsável:</label>
+            <br>
             <select id="engineer_id" name="engineer_id" required>
                 {% for engineer in engineers %}
                     <option value="{{ engineer.id }}" {% if engineer.id == project.engineer_responsible_id %}selected{% endif %}>{{ engineer.name }}</option>
                 {% endfor %}
-            </select><br>
+            </select>
+            <hr>
 
             <label for="area">Area:</label>
+            <br>
             <input type="text" id="area" name="area" value="{{ project.area }}" required><br>
-
-            <h2>Materials</h2>
+            <hr>
+            <label for="bedrooms">Quantidade de quartos:</label>
+            <br>
+            <input type="text" id="bedrooms" name="bedrooms" value="{{ project.bedrooms }}" required><br>
+            <hr>
+            <label for="bathrooms">Quantidade de banheiros:</label>
+            <br>
+            <input type="text" id="bathrooms" name="bathrooms" value="{{ project.bathrooms }}" required><br>
+            <hr>
+            <label for="floors">Quantidade de pisos:</label>
+            <br>
+            <input type="text" id="floors" name="floors" value="{{ project.floors }}" required><br>
+            <hr>
+            <h2>Materiais</h2>
             {% for material in materials %}
-                <button type="button" onclick="addMaterial('{{ material.id }}', '{{ material.name }}', '{{ material.price }}')">Add {{ material.name }}</button>
+                <button class='btn btn-primary' type="button" onclick="addMaterial('{{ material.id }}', '{{ material.name }}', '{{ material.price }}')">Add {{ material.name }}</button>
             {% endfor %}
-
+            <hr>
             <div id="material-fields">
                 <!-- Selected materials will be added here -->
                 {% for project_material in project.projectmaterial_set.all %}
                     <div class="material-field">
                         <input type="text" name="materials" value="{{ project_material.material.id }}" readonly>
 
-                        <label>Name: {{ project_material.material.name }}</label>
-                        <label>Price: ${{ project_material.material.price }}</label>
+                        <label>Nome: {{ project_material.material.name }}</label>
+                        <label>Preço: ${{ project_material.material.price }}</label>
 
                         <input type="number" name="quantities" value="{{ project_material.quantity }}" required oninput="calculateSubtotal()">
-                        <button type="button" onclick="removeMaterialField(this)">Remove</button>
+                        <button class='btn btn-warning' type="button" onclick="removeMaterialField(this)">Remover</button>
                     </div>
                 {% endfor %}
             </div>
-
+            <hr>
             <label for="subtotal">Subtotal:</label>
+            <br>
             <input type="text" id="subtotal" name="subtotal" value="{{ project.subtotal }}" readonly>
-
-            <button type="submit">Update</button>
+            <hr>
+            <button class='btn btn-success' type="submit">Atualizar</button>
         </form>
     </div>
 

@@ -27,6 +27,10 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     engineer_responsible = models.ForeignKey(Engineeer, on_delete=models.CASCADE)
     area = models.CharField(max_length=100)
+    bedrooms = models.IntegerField()
+    bathrooms = models.IntegerField()
+    floors = models.IntegerField()
+
     materials = models.ManyToManyField(Material, through='ProjectMaterial')
     subtotal = models.FloatField(default=0)
 
@@ -45,4 +49,4 @@ class ProjectMaterial(models.Model):
     total_value = models.FloatField(default=0)
 
     def __str__(self):
-        return self.project    
+        return self.project

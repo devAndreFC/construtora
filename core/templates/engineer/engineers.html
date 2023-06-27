@@ -1,36 +1,35 @@
 {% extends 'global/base.html' %}
-
 {% block content %}
-    <div class="container">   
-        <h1>Lista de eng <a class="btn btn-success" href='{% url "engineer_create" %}'>Add Engenheiro</a></h1>
-
-        <div class="table-responsive center">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Crea</th>
-                    <th scope="col">Fone</th>
-                    <th scope="col">Ação</th>
+<div class="container">   
+    <br>
+    <h1>Nossos Engenheiros  <a class='btn btn-success' href='{% url "engineer_create" %}'>Add Material</a></h1>
+    <hr>
+    <div class="table-responsive center">
+        <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Crea</th>
+            <th scope="col">Fone</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for engineer in engineers %}
+                <tr class="table-row">
+                    <td class="table-cel">{{ engineer.name }}</td>   
+                    <td class="table-cel">{{ engineer.email }}</td>
+                    <td class="table-cel">{{ engineer.crea }}</td>
+                    <td class="table-cel">{{ engineer.phone }}</td>
+                    <td class="table-cel">
+                        <a class='btn btn-warning' href="{% url 'engineer_update' engineer.id %}">Editar</a>
+                        <a class='btn btn-danger' href="{% url 'engineer_delete' engineer.id %}">Excluir</a>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                    {% for engineer in engineers%}
-                        <tr class="table-row">    
-                            <td class="table-cel">{{ engineer.name }}</td>   
-                            <td class="table-cel">{{ engineer.email }}</td>
-                            <td class="table-cel">{{ engineer.crea }}</td>
-                            <td class="table-cel">{{ engineer.phone }}</td>
-                            <td class="table-cel">
-                            <a class='btn btn-warning' href="{% url 'engineer_update' engineer.id %}">Editar</a>
-                            <a class='btn btn-danger' href="{% url 'engineer_delete' engineer.id %}">Excluir</a>
-                            </td>
-                        </a></p>
-                        </tr>
-                    {% endfor %} 
-                </tbody>
-            </table>
-        </div>
+            {% endfor %}
+        </tbody>
+      </table>
     </div>
+  </div>
 {% endblock content %}
